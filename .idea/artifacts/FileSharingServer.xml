@@ -1,0 +1,21 @@
+<component name="ArtifactManager">
+  <artifact type="exploded-war" build-on-make="true" name="FileSharingServer">
+    <output-path>$PROJECT_DIR$/out/artifacts/FileSharingServer</output-path>
+    <root id="root">
+      <element id="javaee-facet-resources" facet="FileSharingServer/web/Web" />
+      <element id="directory" name="WEB-INF">
+        <element id="directory" name="classes">
+          <element id="module-output" name="FileSharingServer" />
+        </element>
+        <element id="directory" name="lib">
+          <element id="file-copy" path="$PROJECT_DIR$/../JavaProj/mysql-connector-java-5.1.40-bin.jar" />
+          <element id="file-copy" path="D:/az/commons-lang3-3.6-bin/commons-lang3-3.6/commons-lang3-3.6.jar" />
+          <element id="file-copy" path="D:/az/commons-fileupload-1.3.3-bin/commons-fileupload-1.3.3-bin/commons-fileupload-1.3.3.jar" />
+          <element id="file-copy" path="D:/az/commons-io-2.5-bin/commons-io-2.5/commons-io-2.5.jar" />
+          <element id="file-copy" path="D:/az/jstl-1.2.jar" />
+        </element>
+        <element id="javaee-facet-resources" facet="FileSharingServer/web/Web" />
+      </element>
+    </root>
+  </artifact>
+</component>
