@@ -22,13 +22,10 @@
     request.setAttribute("contentPath",contentPath);
 %>
 
-<%--suppress ELValidationInJSP --%>
 <cst:baseTagfile title="${title}">
-<%--suppress ELValidationInJSP --%>
-    <jsp:attribute name="base"><%--@elvariable id="errorMessage" type="FileManagementPackage.ServletFileUploadManager"--%>
+    <jsp:attribute name="base">
         ${errorMessage}
         <h3>Your Files:</h3>
-<%--suppress ELValidationInJSP --%>
         <c:forEach items="${urlData}" var="list">
                 <p>Item: &nbsp;
                     <a href="${contentPath}/DownloadFile?fileName=${list}">

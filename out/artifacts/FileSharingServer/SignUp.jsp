@@ -1,3 +1,4 @@
+<%--suppress ALL --%>
 <%--
   Created by IntelliJ IDEA.
   User: Echo01
@@ -14,10 +15,15 @@
     <div>
         ${msg}
         ${msg2}
-        <form method="post" action="ServletAuth">
-            UserName: <input id="passID" type="text" name="user_name" oninput="fn()" required><br>
-            Password: <input id="confPass" type="password" name="pass" oninput="fn()" required><br>
-            Confirm Password: <input id="confPass2" type="password" name="passConf" oninput="fn()" required><br>
+<%--suppress HtmlUnknownTarget --%>
+            <form method="post" action="ServletAuth">
+            <label for="passID">UserName: </label><input autocomplete="off" id="passID" type="text"
+                                                         name="user_name" oninput="fn()"
+                                                          required><br>
+            <label for="confPass">Password: </label><input id="confPass" autocomplete="off" type="password" name="pass"
+                                                           oninput="fn()"
+                                                           required><br>
+            <label for="confPass2">Confirm Password: </label><input id="confPass2" autocomplete="off" type="password" name="passConf" oninput="fn()" required><br>
             <input id="btn" type="submit" value="Sign Up" disabled>
         </form>
         <script>
