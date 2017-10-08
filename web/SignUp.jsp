@@ -15,7 +15,6 @@
     <div>
         ${msg}
         ${msg2}
-<%--suppress HtmlUnknownTarget --%>
             <form method="post" action="ServletAuth">
             <label for="passID">UserName: </label><input autocomplete="off" id="passID" type="text"
                                                          name="user_name" oninput="fn()"

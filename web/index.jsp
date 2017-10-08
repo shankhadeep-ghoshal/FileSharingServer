@@ -15,7 +15,6 @@
   <body>
   <h1>Your personal file storage and sharing hub</h1>
   ${message}
-<%--suppress HtmlUnknownTarget --%>
   <form method="post" action="Login">
       <label>
           <input type="text" name="user_name">
