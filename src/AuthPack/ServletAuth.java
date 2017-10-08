@@ -10,7 +10,6 @@ import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -30,19 +29,18 @@ public class ServletAuth extends HttpServlet  {
             " the range of 8 to 32."+ " Please refrain from trying XSS and SQL Injections. "+"You'll fail miserably.";
     private static final String wentWrong = "Something went wrong. Please try again now or later.";
 
-    private String usr,pass,cnfPass;
+    private String usr;
+    private String cnfPass;
     private static final String[] redList = {"<",">","'","\""};
 
     private Connection c;
-    private PreparedStatement pst;
 
     @Override
-    public void init() throws ServletException {
+    public void init() {
         c = JDBCConnectorClass.getConn();
     }
 
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException,
-             IOException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) {
         queryToDb(request,response);
     }
 
@@ -62,45 +60,35 @@ public class ServletAuth extends HttpServlet  {
         return true;
     }
 
-    /**
-     * This method sets the global parameters for this class<br>
-     * If the conditions are not met then the user is redirected back<br>
-     * to the <a href="/SignUp.jsp">SignUp.jsp</a> page<br>
-     * @param request
-     * @param response
-     * @throws IOException
-     * @throws ServletException
-     * @return <b>true</b> if username, password and confirmPassword is sanitised<br>
-     *     else return <b>false</b>
-     */
-    private boolean setParams(HttpServletRequest request,HttpServletResponse response) throws IOException,
-            ServletException {
+
+
+    private boolean setParams(HttpServletRequest request) {
         String un,pa,cp;
         un = request.getParameter("user_name");
         pa = request.getParameter("pass");
         cp = request.getParameter("passConf");
         if(filterString(un) && filterString(pa) && filterString(cp) && pa.contentEquals(cp)){
-            this.usr = un;   this.pass = pa;    this.cnfPass = cp;
+            this.usr = un;
+            this.cnfPass = cp;
             return true;
         }else{
             request.setAttribute("msg2",propCred);
-            //request.getRequestDispatcher(request.getContextPath()+"/SignUp.jsp").include(request,response);
             return false;
         }
     }
 
     private void queryToDb(HttpServletRequest request, HttpServletResponse response)  {
         try {
-            if(setParams(request, response)){
+            if(setParams(request)){
                 String query = "INSERT INTO `usr_det_log_table` VALUES(default,?,?,?);";
                 EncryptClass aClass = new EncryptClass(2048,256,100000);
                 String key = aClass.hashPassword(cnfPass);
                 byte[] bt = aClass.getMC();
-                this.pst = c.prepareStatement(query);
-                this.pst.setString(1,usr);this.pst.setString(2,key);this.pst.setBytes(3,bt);
+                PreparedStatement pst = c.prepareStatement(query);
+                pst.setString(1,usr);
+                pst.setString(2,key);
+                pst.setBytes(3,bt);
                 pst.executeUpdate();
-                //HttpSession session = request.getSession();
-                //session.invalidate();
                 request.getRequestDispatcher("/index.jsp").forward(request,response);
             } else {
                 request.setAttribute("msg", wentWrong);

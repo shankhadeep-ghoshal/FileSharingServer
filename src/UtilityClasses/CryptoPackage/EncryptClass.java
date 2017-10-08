@@ -8,18 +8,16 @@ import java.security.spec.InvalidKeySpecException;
 
 public class EncryptClass {
     private static final String ALGO = "PBKDF2WithHmacSHA512";
-    private SecureRandom secureRandom;
     private int saltSize;
-    private int hashBites;
-    private int iterations;
+    private final int hashBites;
+    private final int iterations;
     private byte[] MC;
-    private String MMC;
 
 
     private byte[] getSalt(){
-        this.secureRandom = new SecureRandom();
+        SecureRandom secureRandom = new SecureRandom();
         byte[] salt = new byte[this.saltSize];
-        this.secureRandom.nextBytes(salt);
+        secureRandom.nextBytes(salt);
         this.MC = salt;
         return salt;
     }
@@ -31,9 +29,7 @@ public class EncryptClass {
         PBEKeySpec pbeKeySpec = new PBEKeySpec(hash,salt,this.iterations,this.hashBites);
         SecretKeyFactory keyFactory = SecretKeyFactory.getInstance(ALGO);
         byte[] hsh = keyFactory.generateSecret(pbeKeySpec).getEncoded();
-        String temp = new String(hsh);
-        this.MMC = temp;
-        return temp;
+        return new String(hsh);
     }
 
     public boolean chkPass(String userInput, String fromDb, byte[] namak) throws NoSuchAlgorithmException, InvalidKeySpecException{
@@ -58,24 +54,8 @@ public class EncryptClass {
         this.iterations = iterations;
     }
 
-    public void setByteSize(int byteSize) {
-        this.saltSize = byteSize;
-    }
-
-    public void setIterations(int iterations){
-        this.iterations = iterations;
-    }
-
-    public void setHashBites(int hashBites) {
-        this.hashBites = hashBites;
-    }
-
     public byte[] getMC(){
         return this.MC;
-    }
-
-    public String getMMC() {
-        return MMC;
     }
 
 }

@@ -17,14 +17,19 @@
     <input type="file" name = "file" value="Select Files">&nbsp;
     <input type="submit" value="Upload">
 </form>
-<% if(session.getAttribute("userLogged")== null)response.sendRedirect("index.jsp"); %>
+<% if(session.getAttribute("userLogged")== null)response.sendRedirect("index.jsp");
+    String contentPath = request.getContextPath();
+    request.setAttribute("contentPath",contentPath);
+%>
 
 <cst:baseTagfile title="${title}">
     <jsp:attribute name="base">
         ${errorMessage}
         <h3>Your Files:</h3>
-            <c:forEach items="${urlDat}" var="list">
-                <p><a href="#">Item : <c:out value="${list.fileLocation}"/></a></p>
+            <c:forEach items="${urlData}" var="list">
+                <p>Item: &nbsp;
+                    <a href="${contentPath}/DownloadFile?fileName=${list}">
+                        <c:out value="${list}"/></a></p>
             </c:forEach>
     </jsp:attribute>
 </cst:baseTagfile>

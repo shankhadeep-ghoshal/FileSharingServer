@@ -30,6 +30,7 @@
         <servlet-name>Login</servlet-name>
         <url-pattern>/Login/*</url-pattern>
     </servlet-mapping>
+
     <servlet>
         <servlet-name>AuthPack.ServletAuth</servlet-name>
         <servlet-class>AuthPack.ServletAuth</servlet-class>
@@ -38,6 +39,7 @@
         <servlet-name>AuthPack.ServletAuth</servlet-name>
         <url-pattern>/Auth</url-pattern>
     </servlet-mapping>
+
     <servlet>
         <servlet-name>AuthPack.ServletLogout</servlet-name>
         <servlet-class>AuthPack.ServletLogout</servlet-class>
@@ -46,6 +48,7 @@
         <servlet-name>AuthPack.ServletLogout</servlet-name>
         <url-pattern>/Logout</url-pattern>
     </servlet-mapping>
+
     <servlet>
         <servlet-name>FileManagementPackage.ServletFileUploadManager</servlet-name>
         <servlet-class>FileManagementPackage.ServletFileUploadManager</servlet-class>
@@ -54,14 +57,24 @@
         <servlet-name>FileManagementPackage.ServletFileUploadManager</servlet-name>
         <url-pattern>/Upload</url-pattern>
     </servlet-mapping>
-    <!--<servlet>
+
+    <servlet>
         <servlet-name>TableDataSettingServlet</servlet-name>
-        <servlet-class>FileManagementPackage.ServletShowDataToJSP</servlet-class>
+        <servlet-class>FilterPackage.ServletDataSetter</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>TableDataSettingServlet</servlet-name>
         <url-pattern>/DataServe</url-pattern>
-    </servlet-mapping>-->
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>ServletDownload</servlet-name>
+        <servlet-class>FileManagementPackage.ServletDownloadManager</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ServletDownload</servlet-name>
+        <url-pattern>/DownloadFile</url-pattern>
+    </servlet-mapping>
 
     <!--<jsp-config>
         <jsp-property-group>

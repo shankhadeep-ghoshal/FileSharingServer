@@ -15,10 +15,11 @@ public class FilterAuthChecker implements Filter {
     public void doFilter(ServletRequest req, ServletResponse resp, FilterChain chain) throws ServletException, IOException {
         String obtUri = ((HttpServletRequest)req).getRequestURI().substring(((HttpServletRequest)req).getContextPath
                 ().length()+1);
-        HttpSession session = ((HttpServletRequest)req).getSession();
         String setPath;
-
-        //if(session!=null){
+        HttpSession session = ((HttpServletRequest)req).getSession();
+        if(session == null || session.getAttribute("userLogged") == null){
+            ((HttpServletResponse)resp).sendRedirect(((HttpServletRequest) req).getContextPath());
+        }else{
             if(obtUri.contains("user/")){
                 setPath = obtUri.substring(5);
                 if(!setPath.isEmpty()){
@@ -27,25 +28,24 @@ public class FilterAuthChecker implements Filter {
                 ((HttpServletResponse)resp).setHeader("Cache-Control", "no-cache, no-store, must-revalidate");// HTTP 1.1.
                 ((HttpServletResponse)resp).setHeader("Pragma", "no-cache"); // HTTP 1.0.
                 ((HttpServletResponse)resp).setHeader("Expires", "0"); //Proxy
-                req.getRequestDispatcher("/LoginLanding.jsp").forward(req,resp);
+                req.getRequestDispatcher("/DataServe").forward(req,resp);
             }else
-                if(obtUri.contains("/Logout")){
-                    req.getRequestDispatcher("/Logout").forward(req,resp);
+            if(obtUri.contains("/Logout")){
+                req.getRequestDispatcher("/Logout").forward(req,resp);
             }else
-                if(obtUri.contentEquals("/Upload")){
-                    req.getRequestDispatcher("/Upload").forward(req,resp);
+            if(obtUri.contentEquals("/Upload")){
+                req.getRequestDispatcher("/Upload").forward(req,resp);
             }else
-                if(obtUri.contentEquals("/DataServe")){
-                    req.getRequestDispatcher("/DataServe").forward(req,resp);
+            if(obtUri.contentEquals("/DataServe")){
+                req.getRequestDispatcher("/DataServe").forward(req,resp);
+            }else
+            if(obtUri.contentEquals("/DownloadFile")){
+                req.getRequestDispatcher("/DownloadFile").forward(req,resp);
             }
-       /* }else{
-            req.getRequestDispatcher("/index.jsp").include(req,resp);
-        }*/
-
+        }
     }
 
-    public void init(FilterConfig config) throws ServletException {
-
+    public void init(FilterConfig config) {
     }
 
 }

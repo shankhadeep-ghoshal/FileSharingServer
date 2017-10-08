@@ -6,16 +6,12 @@ import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.apache.commons.io.FilenameUtils;
 
-import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.File;
-import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.List;
-import java.util.Objects;
 import java.util.logging.Level;
 
 import static java.util.Objects.requireNonNull;
@@ -25,9 +21,9 @@ public class ServletFileUploadManager extends HttpServlet {
     private static final String[] extensionList = {"pdf","doc","rtf","docx","rrt","pptx","xls","xlsx","jpg","jpeg"
         ,"png"};
     private static final String message = "File/s not uploaded because of wrong file type";
-    private static final String message2 = "Something went wrong";
+    private static final String message2 = "Directory couldn't be created";
 
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) {
         manageUploads(request,response);
     }
 
@@ -44,9 +40,9 @@ public class ServletFileUploadManager extends HttpServlet {
                 }
                 String[] extName = requireNonNull(nnm).split("\\.");
                 if(checkValidity(extName[1])){
-                    if (ifDirectoryExists(demoDir)){
-                        writeFile(demoDir,nnm,file);
-                    }else printWrite(response);
+                    boolean idDirExists = demoDir.exists() || demoDir.mkdirs();
+                    if(idDirExists) writeFile(demoDir,nnm,file);
+                    else request.setAttribute("errorMessage",message2);
                 }else{
                     request.setAttribute("errorMessage",message);
                 }
@@ -54,14 +50,6 @@ public class ServletFileUploadManager extends HttpServlet {
             response.sendRedirect(request.getContextPath()+"/user/"+request.getSession().getAttribute("userLogged"));
         } catch (Exception e) {
             ExceptionHandler.HandleExc(e,this.getClass(), Level.SEVERE);
-        }
-    }
-
-    private boolean ifDirectoryExists(File dir){
-        if(dir.exists())return true;
-        else {
-            dir.mkdirs();
-            return true;
         }
     }
 
@@ -79,9 +67,4 @@ public class ServletFileUploadManager extends HttpServlet {
         return false;
     }
 
-    private void printWrite(HttpServletResponse response) throws IOException{
-        PrintWriter writer = response.getWriter();
-        writer.print(message2);
-        writer.close();
-    }
 }

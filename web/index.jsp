@@ -1,3 +1,5 @@
+<%--suppress ALL --%>
+<%--suppress ALL --%>
 <%--
   Created by IntelliJ IDEA.
   User: Echo01
@@ -8,13 +10,19 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
   <head>
-    <title>$Title$</title>
+    <title>File Sharing Server</title>
   </head>
   <body>
+  <h1>Your personal file storage and sharing hub</h1>
   ${message}
+<%--suppress HtmlUnknownTarget --%>
   <form method="post" action="Login">
-      <input type="text" name="user_name">
-      <input type="password" name="pass">
+      <label>
+          <input type="text" name="user_name">
+      </label>
+      <label>
+          <input type="password" name="pass">
+      </label>
       <input type="submit" value="Login">
   </form>
   <div align="right">

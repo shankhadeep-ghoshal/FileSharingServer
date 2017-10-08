@@ -9,10 +9,6 @@
 <html>
 <head>
     <title>SignUp</title>
-    <script type="text/javascript">
-        var x = document.getElementById("passID").nodeValue;
-        var y = document.getElementById("confPass").nodeValue;
-    </script>
 </head>
 <body>
     <div>
@@ -29,12 +25,7 @@
                 var x = document.getElementById("confPass2").value;
                 var y = document.getElementById("confPass").value;
                 var z = document.getElementById("passID").value;
-                if(z.length > 7 && x.length > 7 && y.length > 7 && x==y){
-                    document.getElementById("btn").disabled = false;
-                }
-                else {
-                    document.getElementById("btn").disabled = true;
-                }
+                document.getElementById("btn").disabled = !(z.length > 7 && x.length > 7 && y.length > 7 && x === y);
             }
         </script>
     </div>
